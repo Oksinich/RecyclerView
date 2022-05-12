@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
 
 	private lateinit var recyclerView: RecyclerView
-	private lateinit var mList:  List<RecyclerViewItem>
+	private lateinit var mList:  MutableList<RecyclerViewItem>
 	private lateinit var adapter: ItemAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
