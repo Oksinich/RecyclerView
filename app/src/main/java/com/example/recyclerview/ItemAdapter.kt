@@ -51,47 +51,15 @@ class ItemAdapter(
                  * Если грейд свернули, то из [gradesList] удаляю критерии грейда, чтоб они не отображались
                  */
                 if (!model.isExpanded) {
-                    model.criteriASS.forEach { modelDesc ->
-                        gradesList.removeIf {
-                            it == modelDesc
-                        }
-                        notifyDataSetChanged()
-                    }
+                    gradesList.subList(position + 1, model.criteriASS.size + position + 1).clear()
+                    notifyItemRangeRemoved(position + 1, model.criteriASS.size)
+                    notifyItemRangeChanged(position + 1, itemCount)
                 } else {
                     /**
-                     * Если грейд развернули, то
-                     * если это не единственный грейд и не последний, то сохраняю всё что ниже
-                     * в "кэш" [subGradesList] и удаляю из [gradesList]
-                     * Потом добавляю в [gradesList] критерии грейда и всё что шло ниже ([subGradesList])
-                     *
+                     * Если грейд развернули, то добавляем его критерии
                      */
-                    if (gradesList.size > 1 && position != gradesList.size - 1) {
-                        val subGradesList = ArrayList<RecyclerViewItem>(
-                            gradesList.subList(
-                                position + 1,
-                                gradesList.size
-                            )
-                        )
-                        gradesList.removeIf {
-                            subGradesList.contains(it)
-                        }
-                        model.criteriASS.forEach {
-                            gradesList.add(it)
-                        }
-
-                        subGradesList.forEach {
-                            gradesList.add(it)
-                        }
-
-                        notifyDataSetChanged()
-                    } else {
-                        /**
-                         * Если единственный или последний грейд, то просто добавляю в [gradesList] его критерии
-                         */
-                        gradesList.addAll(model.criteriASS)
-                        notifyDataSetChanged()
-
-                    }
+                    gradesList.addAll(position + 1, model.criteriASS)
+                    notifyItemRangeInserted(position + 1, model.criteriASS.size)
                 }
             }
         }
@@ -99,7 +67,6 @@ class ItemAdapter(
         if (holder is DescViewHolder && model is RecyclerViewItem.Desc) {
             holder.desc.text = model.desc
         }
-
     }
 
     override fun getItemCount(): Int {
