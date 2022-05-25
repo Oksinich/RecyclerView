@@ -53,13 +53,14 @@ class ItemAdapter(
                 if (!model.isExpanded) {
                     gradesList.subList(position + 1, model.criteriASS.size + position + 1).clear()
                     notifyItemRangeRemoved(position + 1, model.criteriASS.size)
-                    notifyItemRangeChanged(position + 1, itemCount)
+                    notifyItemRangeChanged(position+1, itemCount)
                 } else {
                     /**
                      * Если грейд развернули, то добавляем его критерии
                      */
                     gradesList.addAll(position + 1, model.criteriASS)
                     notifyItemRangeInserted(position + 1, model.criteriASS.size)
+                    notifyItemRangeChanged(position+1, itemCount)
                 }
             }
         }
