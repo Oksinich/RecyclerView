@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 		setContentView(R.layout.activity_main)
 
 		recyclerView = findViewById(R.id.rv_parent)
+		recyclerView.setItemViewCacheSize(20)
 		recyclerView.setHasFixedSize(true)
 		recyclerView.layoutManager = LinearLayoutManager(this)
 		mList = GradeDataFactory.getParents(this.resources)
